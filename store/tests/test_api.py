@@ -1,3 +1,6 @@
+import json
+
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -11,6 +14,7 @@ class BooksApiTestCase(APITestCase):
         self.book1 = Book.objects.create(name="Test book 1", price=1000, author="Author 1")
         self.book2 = Book.objects.create(name="Test book 2", price=1100, author="Author 2")
         self.book3 = Book.objects.create(name="Test book 3", price=800, author="Author 1")
+        self.user = User.objects.create(username="Test User")
 
     def test_get(self):
         url = reverse('book-list')
@@ -39,3 +43,31 @@ class BooksApiTestCase(APITestCase):
         serializer_data = BookSerializer([self.book1, self.book3, self.book2], many=True).data
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(serializer_data, response.data)
+
+    def test_create_book(self):
+        self.assertEquals(Book.objects.all().count(), 3)
+        url = reverse("book-list")
+        data = {
+            "name": "Test book 1",
+            "price": 700,
+            "author": "Test Author"
+        }
+        json_data = json.dumps(data)
+        self.client.force_login(self.user)
+        response = self.client.post(url, data=json_data, content_type='application/json')
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertEquals(Book.objects.all().count(), 4)
+
+    def test_update_book(self):
+        url = reverse("book-detail", args=(self.book1.id,))
+        data = {
+            "name": self.book1.name,
+            "price": 500,
+            "author": self.book1.author
+        }
+        json_data = json.dumps(data)
+        self.client.force_login(self.user)
+        response = self.client.put(url, data=json_data, content_type='application/json')
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.book1.refresh_from_db()
+        self.assertEquals(self.book1.price, 500)
