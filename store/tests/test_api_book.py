@@ -12,9 +12,13 @@ from store.serializers import BookSerializer
 class BooksApiTestCase(APITestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(username="Test User")
-        self.book1 = Book.objects.create(name="Test book 1", price=1000, author="Author 1", owner=self.user)
-        self.book2 = Book.objects.create(name="Test book 2", price=1100, author="Author 2", owner=self.user)
-        self.book3 = Book.objects.create(name="Test book 3", price=800, author="Author 1", owner=self.user)
+        self.user2 = User.objects.create(username="Test User 2")
+        self.book1 = Book.objects.create(name="Test book 1", price=1000,
+                                         author="Author 1", owner=self.user)
+        self.book2 = Book.objects.create(name="Test book 2", price=1100,
+                                         author="Author 2", owner=self.user)
+        self.book3 = Book.objects.create(name="Test book 3", price=800,
+                                         author="Author 1", owner=self.user)
 
     def test_get(self):
         url = reverse('book-list')
@@ -74,7 +78,6 @@ class BooksApiTestCase(APITestCase):
         self.assertEquals(self.book1.price, 500)
 
     def test_update_book_not_owner(self):
-        self.user2 = User.objects.create(username="Test User 2")
         url = reverse("book-detail", args=(self.book1.id,))
         data = {
             "name": self.book1.name,
