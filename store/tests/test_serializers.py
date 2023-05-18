@@ -37,19 +37,52 @@ class BookSerializerTestCase(TestCase):
                 "name": "Test book 1",
                 "price": "1000.00",
                 "author": "Author 1",
-                "likes_count": 3,
                 "annotated_likes": 3,
-                "rating": '3.67'
+                "rating": '3.67',
+                "readers": [
+                    {
+                        "username": "User 1",
+                        "first_name": "",
+                        "last_name": ""
+                    },
+                    {
+                        "username": "User 2",
+                        "first_name": "",
+                        "last_name": ""
+                    },
+                    {
+                        "username": "User 3",
+                        "first_name": "",
+                        "last_name": ""
+                    }
+                ]
             },
             {
                 "id": self.book2.id,
                 "name": "Test book 2",
                 "price": '1100.00',
                 "author": "Author 2",
-                "likes_count": 2,
                 "annotated_likes": 2,
-                "rating": "3.00"
+                "rating": "3.00",
+                "readers": [
+                    {
+                        "username": "User 1",
+                        "first_name": "",
+                        "last_name": ""
+                    },
+                    {
+                        "username": "User 2",
+                        "first_name": "",
+                        "last_name": ""
+                    },
+                    {
+                        "username": "User 3",
+                        "first_name": "",
+                        "last_name": ""
+                    }
+                ]
             }
         ]
+        print(data)
         self.assertEquals(expected_data, data)
 
