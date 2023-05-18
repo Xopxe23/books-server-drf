@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 from store.logic import set_rating
-from store.models import UserBookRelation, Book
+from store.models import Book, UserBookRelation
 
 
 class SetRatingTest(TestCase):

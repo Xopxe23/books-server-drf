@@ -1,10 +1,10 @@
-from django.db.models import Count, Case, When, Avg
+from django.db.models import Avg, Case, Count, When
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from store.models import Book, UserBookRelation
 from store.permissions import IsOwnerOrReadOnly
