@@ -26,7 +26,7 @@ class BooksApiTestCase(APITestCase):
         response = self.client.get(url)
         books = Book.objects.all().annotate(
             annotated_likes=Count(Case(When(userbookrelation__like=True, then=1))),
-            rating=Avg("userbookrelation__rate")
+            # rating=Avg("userbookrelation__rate")
         ).order_by("id")
         serializer_data = BookSerializer(books, many=True).data
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -36,7 +36,7 @@ class BooksApiTestCase(APITestCase):
         url = reverse('book-list')
         books = Book.objects.filter(id__in=[self.book1.id, self.book3.id]).annotate(
             annotated_likes=Count(Case(When(userbookrelation__like=True, then=1))),
-            rating=Avg("userbookrelation__rate")
+            # rating=Avg("userbookrelation__rate")
         ).order_by("id")
         response = self.client.get(url, data={"search": "Author 1"})
         serializer_data = BookSerializer(books, many=True).data
@@ -48,7 +48,7 @@ class BooksApiTestCase(APITestCase):
         response = self.client.get(url, data={"price": "1100.00"})
         books = Book.objects.filter(id=self.book2.id).annotate(
             annotated_likes=Count(Case(When(userbookrelation__like=True, then=1))),
-            rating=Avg("userbookrelation__rate")
+            # rating=Avg("userbookrelation__rate")
         ).order_by("id")
         serializer_data = BookSerializer(books, many=True).data
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -59,7 +59,7 @@ class BooksApiTestCase(APITestCase):
         response = self.client.get(url, data={"ordering": "author"})
         books = Book.objects.all().annotate(
             annotated_likes=Count(Case(When(userbookrelation__like=True, then=1))),
-            rating=Avg("userbookrelation__rate")
+            # rating=Avg("userbookrelation__rate")
         ).order_by("author", "id")
         serializer_data = BookSerializer(books, many=True).data
         self.assertEquals(response.status_code, status.HTTP_200_OK)
