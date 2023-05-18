@@ -3,9 +3,9 @@ import json
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APITestCase
 
 from store.models import Book, UserBookRelation
-from rest_framework.test import APITestCase
 
 
 class BooksApiTestCase(APITestCase):

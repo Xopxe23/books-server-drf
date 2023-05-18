@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from store.views import BookViewSet, auth, UserBookRelationViewSet
+from store.views import BookViewSet, UserBookRelationViewSet, auth
 
 router = SimpleRouter()
 router.register(viewset=BookViewSet, prefix=r'book')
